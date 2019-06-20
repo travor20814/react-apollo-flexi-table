@@ -1,0 +1,9 @@
+[ignore]
+
+[include]
+
+[libs]
+decls/
+
+[options]
+module.file_ext=.graphql
