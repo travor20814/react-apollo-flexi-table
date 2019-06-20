@@ -22,7 +22,7 @@ module.exports = {
   ],
   devServer: {
     contentBase: __dirname,
-    port: 6666,
+    port: 5334,
     progress: true,
     hot: true,
     historyApiFallback: true,
