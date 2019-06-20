@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { memo } from 'react';
 
 import { TableContext } from '../../constants/context.js';
 import { mixer } from '../../helpers/styles.js';
@@ -11,17 +11,13 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    borderRadius: 8,
-    padding: '0 4px 0 0',
-    margin: '10px 0 16px',
+    margin: '0 0 16px 0',
   },
   headerField: {
     flex: 1,
     margin: '0 8px',
     textAlign: 'center',
-    fontSize: 16,
     fontWeight: 400,
-    color: 'white',
   },
 };
 
@@ -32,14 +28,19 @@ function TableHeader() {
         children,
         getActions,
         actionTitles,
-        colors,
-      }) => (
+        headerStyles,
+      }: TableContext) => (
         <div
           style={mixer([
             styles.tableFrozenHeaderWrapper,
             {
-              backgroundColor: colors.PRIMARY_COLOR,
+              backgroundColor: headerStyles.backgroundColor,
+              border: headerStyles.headerBorder,
+              borderRadius: headerStyles.borderRadius,
             },
+            headerStyles.wrapperStyle ? {
+              ...headerStyles.wrapperStyle,
+            } : null,
           ])}>
           {(children && children.map((field, idx) => {
             if (!field.props) return null;
@@ -58,6 +59,8 @@ function TableHeader() {
                   {
                     flex: flex || 1,
                     minWidth: minWidth || 'auto',
+                    color: headerStyles.textColor,
+                    fontSize: headerStyles.fontSize,
                   },
                 ])}>
                 {name || null}
@@ -65,7 +68,15 @@ function TableHeader() {
             );
           })) || null}
           {getActions ? getActions().map((element, idx) => (
-            <span key={`${element}-${idx + 1}`} style={styles.headerField}>
+            <span
+              key={`${element}-${idx + 1}`}
+              style={mixer([
+                styles.headerField,
+                {
+                  color: headerStyles.textColor,
+                  fontSize: headerStyles.fontSize,
+                },
+              ])}>
               {actionTitles[idx] || null}
             </span>
           )) : null}
@@ -75,4 +86,4 @@ function TableHeader() {
   );
 }
 
-export default TableHeader;
+export default memo(TableHeader);

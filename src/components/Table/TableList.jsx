@@ -31,7 +31,6 @@ type Props = {
       id: number,
     }>,
     fetchMore: Function,
-    options: Object,
   },
 };
 
@@ -59,16 +58,11 @@ class TableList extends React.PureComponent<Props, State> {
     const {
       tableData: {
         dataSource,
-        options,
       },
     } = this.props;
 
     if (prevProps.tableData.dataSource !== dataSource) {
       this.fetching = false;
-      document.getElementById('tableScrollBar').scrollTop = 0;
-    }
-
-    if (prevProps.tableData.options !== options) {
       document.getElementById('tableScrollBar').scrollTop = 0;
     }
   }

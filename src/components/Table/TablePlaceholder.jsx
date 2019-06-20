@@ -23,22 +23,35 @@ const styles = {
 };
 
 type Props = {
+  wrapperStyle: Object,
+  style: Object,
   color: string,
   placeholder: string,
 };
 
 function TablePlaceholder({
+  wrapperStyle,
+  style,
   color,
   placeholder = '無資料',
 }: Props) {
   return (
-    <div style={styles.tablePlaceholder}>
+    <div
+      style={mixer([
+        styles.tablePlaceholder,
+        wrapperStyle ? {
+          ...wrapperStyle,
+        } : null,
+      ])}>
       <span
         style={mixer([
           styles.placeholder,
           {
             color,
           },
+          style ? {
+            ...style,
+          } : null,
         ])}>
         {placeholder}
       </span>

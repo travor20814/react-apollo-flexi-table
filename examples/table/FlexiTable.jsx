@@ -1,3 +1,4 @@
+/* eslint import/no-extraneous-dependencies: 0 */
 import React, {
   useState,
 } from 'react';
@@ -21,6 +22,7 @@ const styles = {
   tableWrapper: {
     width: 800,
     height: 'auto',
+    padding: '24px 0',
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
@@ -38,11 +40,34 @@ function FlexiTable() {
     website: 'https://www.google.com',
   }]);
 
+  const headerConfigs = {
+    headerBackgroundColor: 'rgb(0, 185, 175)',
+    headerTextColor: '#fff',
+    headerBorder: 0,
+    headerBorderRadius: 8,
+    headerFontSize: 18,
+  };
+
+  const placeholderConfigs = {
+    placeholderColor: '#9b9b9b',
+    placeholderWrapperStyle: {
+      backgroundColor: '#fff',
+    },
+    placeholderStyle: {
+      fontSize: 13,
+      fontWeight: 700,
+    },
+  };
+
   return (
     <div style={styles.wrapper}>
       <div style={styles.tableWrapper}>
         <Table
+          {...headerConfigs}
+          {...placeholderConfigs}
           dataSource={list}
+          showPlaceholder
+          placeholder="No Data Available"
           actionTitles={['操作']}
           getActions={() => [
             <CategoryManageActions />,
