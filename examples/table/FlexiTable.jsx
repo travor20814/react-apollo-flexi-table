@@ -66,7 +66,7 @@ function FlexiTable() {
           {...headerConfigs}
           {...placeholderConfigs}
           dataSource={list}
-          showPlaceholder
+          showPlaceholder={!list.length}
           placeholder="No Data Available"
           actionTitles={['操作']}
           getActions={() => [
