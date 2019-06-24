@@ -3,6 +3,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 
-import FlexiTable from './table/FlexiTable.jsx';
+import App from './App.jsx';
 
-ReactDOM.render(<FlexiTable />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));

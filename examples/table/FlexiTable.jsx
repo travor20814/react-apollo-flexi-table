@@ -1,8 +1,10 @@
 /* eslint import/no-extraneous-dependencies: 0 */
 import React, {
   useState,
+  memo,
 } from 'react';
-import { hot } from 'react-hot-loader';
+import { Query } from 'react-apollo';
+import { gql } from 'apollo-boost';
 import {
   Table,
   TableField,
@@ -16,7 +18,7 @@ const styles = {
     width: '100vw',
     height: '100vh',
     display: 'flex',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   tableWrapper: {
@@ -101,44 +103,58 @@ function FlexiTable() {
   return (
     <div style={styles.wrapper}>
       <div style={styles.tableWrapper}>
-        <Table
-          {...headerConfigs}
-          {...placeholderConfigs}
-          {...itemConfigs}
-          dataSource={list}
-          fetchMore={() => {
-            if (list.length !== 9) {
-              setList([
-                ...list,
-                ...moreList,
-              ]);
-
-              return moreList;
+        <Query
+          query={gql`
+          {
+            rates(currency: "USD") {
+              currency
+              rate
             }
+          }
+        `}>
+          {({
+            data,
+          }) => (
+            <Table
+              {...headerConfigs}
+              {...placeholderConfigs}
+              {...itemConfigs}
+              dataSource={list}
+              fetchMore={() => {
+                if (list.length !== 9) {
+                  setList([
+                    ...list,
+                    ...moreList,
+                  ]);
 
-            return [];
-          }}
-          fetchMoreHeight={30}
-          showPlaceholder={!list.length}
-          placeholder="No Data Available"
-          actionTitles={['操作']}
-          getActions={() => [
-            <CategoryManageActions />,
-          ]}>
-          <TableField
-            name="Name"
-            fieldKey="name"
-            flex={1}
-            isCenter />
-          <TableField
-            name="Website"
-            fieldKey="website"
-            flex={2}
-            isCenter />
-        </Table>
+                  return moreList;
+                }
+
+                return [];
+              }}
+              fetchMoreHeight={30}
+              showPlaceholder={!list.length}
+              placeholder="No Data Available"
+              actionTitles={['操作']}
+              getActions={() => [
+                <CategoryManageActions />,
+              ]}>
+              <TableField
+                name="Name"
+                fieldKey="name"
+                flex={1}
+                isCenter />
+              <TableField
+                name="Website"
+                fieldKey="website"
+                flex={2}
+                isCenter />
+            </Table>
+          )}
+        </Query>
       </div>
     </div>
   );
 }
 
-export default hot(module)(FlexiTable);
+export default memo(FlexiTable);
