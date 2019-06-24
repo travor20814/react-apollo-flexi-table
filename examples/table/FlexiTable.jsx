@@ -21,13 +21,27 @@ const styles = {
   },
   tableWrapper: {
     width: 800,
-    height: 'auto',
+    height: 240,
     padding: '24px 0',
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
 };
+
+const moreList = [{
+  id: 7,
+  name: 'Benson',
+  website: 'https://www.google.com',
+}, {
+  id: 8,
+  name: 'Emily',
+  website: 'https://www.google.com',
+}, {
+  id: 9,
+  name: 'Apple',
+  website: 'https://www.google.com',
+}];
 
 function FlexiTable() {
   const [list, setList] = useState([{
@@ -37,6 +51,22 @@ function FlexiTable() {
   }, {
     id: 2,
     name: 'Stanney',
+    website: 'https://www.google.com',
+  }, {
+    id: 3,
+    name: 'Travor',
+    website: 'https://www.google.com',
+  }, {
+    id: 4,
+    name: 'Elephant',
+    website: 'https://www.google.com',
+  }, {
+    id: 5,
+    name: 'Banana',
+    website: 'https://www.google.com',
+  }, {
+    id: 6,
+    name: 'Orange',
     website: 'https://www.google.com',
   }]);
 
@@ -66,6 +96,19 @@ function FlexiTable() {
           {...headerConfigs}
           {...placeholderConfigs}
           dataSource={list}
+          fetchMore={() => {
+            if (list.length !== 9) {
+              setList([
+                ...list,
+                ...moreList,
+              ]);
+
+              return moreList;
+            }
+
+            return [];
+          }}
+          fetchMoreHeight={30}
           showPlaceholder={!list.length}
           placeholder="No Data Available"
           actionTitles={['操作']}

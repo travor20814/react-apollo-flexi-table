@@ -10,7 +10,7 @@ import TablePlaceholder from './TablePlaceholder.jsx';
 const styles = {
   tableWrapper: {
     width: '100%',
-    height: 'auto',
+    height: '100%',
     overflowY: 'auto',
     display: 'flex',
     flexFlow: 'column',
@@ -24,6 +24,7 @@ type Props = {
   dataSource: Array<Object>,
   actionTitles: Array<String>,
   fetchMore: Function,
+  fetchMoreHeight?: number,
   getActions: Function,
   showPlaceholder: boolean,
   placeholder?: string,
@@ -44,6 +45,7 @@ function Table({
   getActions,
   dataSource,
   fetchMore,
+  fetchMoreHeight,
   actionTitles,
   showPlaceholder,
   placeholder,
@@ -60,28 +62,29 @@ function Table({
 }: Props) {
   const wrapChildren = children || [];
   const wrapStyle = Array.isArray(wrapperStyle) ? wrapperStyle : [wrapperStyle];
+  const tableData = {
+    children: Array.isArray(wrapChildren) ? wrapChildren : [wrapChildren],
+    getActions: getActions || (() => []),
+    dataSource: dataSource || [],
+    fetchMore,
+    fetchMoreHeight,
+    actionTitles: actionTitles || [],
+    headerStyles: {
+      backgroundColor: headerBackgroundColor,
+      textColor: headerTextColor,
+      border: headerBorder,
+      borderRadius: headerBorderRadius,
+      fontSize: headerFontSize,
+      wrapperStyle: headerWrapperStyle,
+    },
+    colors: {
+      PRIMARY_COLOR: '#ff0000',
+      TEXT_COLOR: '#9b9b9b',
+    },
+  };
 
   return (
-    <TableContext.Provider
-      value={{
-        children: Array.isArray(wrapChildren) ? wrapChildren : [wrapChildren],
-        getActions: getActions || (() => []),
-        dataSource: dataSource || [],
-        fetchMore,
-        actionTitles: actionTitles || [],
-        headerStyles: {
-          backgroundColor: headerBackgroundColor,
-          textColor: headerTextColor,
-          border: headerBorder,
-          borderRadius: headerBorderRadius,
-          fontSize: headerFontSize,
-          wrapperStyle: headerWrapperStyle,
-        },
-        colors: {
-          PRIMARY_COLOR: '#ff0000',
-          TEXT_COLOR: '#9b9b9b',
-        },
-      }}>
+    <TableContext.Provider value={tableData}>
       <div
         style={mixer([
           styles.tableWrapper,
@@ -89,7 +92,7 @@ function Table({
         ])}>
         <TableHeader />
         {!showPlaceholder ? (
-          <TableList />
+          <TableList tableData={tableData} />
         ) : (
           <TablePlaceholder
             color={placeholderColor}
@@ -104,6 +107,7 @@ function Table({
 
 Table.defaultProps = {
   wrapperStyle: null,
+  fetchMoreHeight: 150,
   headerBackgroundColor: 'transparent',
   headerTextColor: '#000',
   headerBorder: '0px solid #000',

@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { memo } from 'react';
 // component
 import TableItemField from './TableItemField.jsx';
 
@@ -50,46 +50,42 @@ type Field = {
   },
 };
 
-class TableItem extends Component<Props> {
-  render() {
-    const {
-      data,
-      children,
-      getActions,
-    } = this.props;
+function TableItem({
+  data,
+  children,
+  getActions,
+}: Props) {
+  return (
+    <div style={styles.tableItemWrapper}>
+      {children.map((field: Field) => {
+        if (!field.props) return null;
+        const {
+          fieldKey,
+        } = field.props;
 
-    return (
-      <div style={styles.tableItemWrapper}>
-        {children.map((field: Field) => {
-          if (!field.props) return null;
-          const {
-            fieldKey,
-          } = field.props;
+        return (
+          <TableItemField
+            key={`${data.id}-${fieldKey}-placement`}
+            field={field}
+            data={data} />
+        );
+      })}
+      {getActions ? getActions().map((element, idx) => {
+        const renderElementWithProps = React.cloneElement(
+          element,
+          {
+            ...data,
+          },
+        );
 
-          return (
-            <TableItemField
-              key={`${data.id}-${fieldKey}-placement`}
-              field={field}
-              data={data} />
-          );
-        })}
-        {getActions ? getActions().map((element, idx) => {
-          const renderElementWithProps = React.cloneElement(
-            element,
-            {
-              ...data,
-            },
-          );
-
-          return (
-            <div key={`function-wrapper-${idx + 1}`} style={styles.tableFunction}>
-              {renderElementWithProps || null}
-            </div>
-          );
-        }) : null}
-      </div>
-    );
-  }
+        return (
+          <div key={`function-wrapper-${idx + 1}`} style={styles.tableFunction}>
+            {renderElementWithProps || null}
+          </div>
+        );
+      }) : null}
+    </div>
+  );
 }
 
-export default TableItem;
+export default memo(TableItem);

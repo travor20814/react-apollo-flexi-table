@@ -48,135 +48,103 @@ type Props = {
   },
 };
 
-class TableItemField extends React.Component<Props> {
-  itemFieldRenderer(fieldProps, myData = null) {
-    if (!fieldProps) return null;
+function itemFieldRenderer(fieldProps, myData = null) {
+  if (!fieldProps) return null;
 
-    const {
-      isImage,
-      isCenter,
-      isClickable,
-      prefix,
-      needBlackBg,
-      color,
-    } = fieldProps;
+  const {
+    isImage,
+    isCenter,
+    isClickable,
+    prefix,
+    needBlackBg,
+    color,
+  } = fieldProps;
 
-    if (isImage) {
-      return (
-        <div
-          style={mixer([
-            styles.tableImage,
-            {
-              backgroundColor: needBlackBg ? 'rgba(0, 0, 0, 0.6)' : 'transparent',
-              backgroundImage: myData ? `url(${myData})` : null,
-            },
-          ])} />
-      );
-    }
-
-    if (isClickable) return null;
-
-    return (
-      <span
-        style={mixer([
-          styles.tableItem,
-          isCenter && styles.textCenter,
-          color ? {
-            color,
-          } : {
-            color: '#9b9b9b',
-          },
-        ])}>
-        {Array.isArray(myData)
-          ? myData.map(d => (prefix ? `${prefix}${d} ` : `${d} `))
-          : myData}
-      </span>
-    );
-  }
-
-  wrapComponentWithContext({
-    field,
-    wrapData,
-    data,
-  }) {
-    const {
-      MutationContext,
-      Component,
-      customVariables,
-    } = field.props;
-
-    if (MutationContext) {
-      return (
-        <MutationContext render={(mutate, { loading }) => {
-          const variables = (customVariables && Object
-            .keys(customVariables).reduce((acc, curr) => {
-              acc[curr] = data[customVariables[curr]];
-              return acc;
-            }, {})) || null;
-
-          return (
-            React.cloneElement(
-              <Component />,
-              {
-                tableField: field,
-                tableData: wrapData,
-                originData: data,
-                customVariables: variables || null,
-                mutate: mutate || null,
-                loading: loading || false,
-              },
-            )
-          );
-        }} />
-      );
-    }
-
-    return React.cloneElement(
-      <Component />,
-      {
-        tableField: field,
-        tableData: wrapData,
-        originData: data,
-      },
-    );
-  }
-
-  render() {
-    const {
-      data,
-      field,
-    } = this.props;
-
-    const {
-      fieldKey,
-      flex,
-      minWidth,
-      Component = null,
-    } = field.props;
-
-    const wrapData = data[fieldKey] || null;
-
+  if (isImage) {
     return (
       <div
         style={mixer([
-          styles.tableItemPlacement,
+          styles.tableImage,
           {
-            flex: flex || 1,
-            minWidth: minWidth || 'auto',
+            backgroundColor: needBlackBg ? 'rgba(0, 0, 0, 0.6)' : 'transparent',
+            backgroundImage: myData ? `url(${myData})` : null,
           },
-        ])}>
-        {Component ? (
-          this.wrapComponentWithContext({
-            field,
-            wrapData,
-            data,
-          })
-        ) : (
-          this.itemFieldRenderer(field.props, wrapData)
-        )}
-      </div>
+        ])} />
     );
   }
+
+  if (isClickable) return null;
+
+  return (
+    <span
+      style={mixer([
+        styles.tableItem,
+        isCenter && styles.textCenter,
+        color ? {
+          color,
+        } : {
+          color: '#9b9b9b',
+        },
+      ])}>
+      {Array.isArray(myData)
+        ? myData.map(d => (prefix ? `${prefix}${d} ` : `${d} `))
+        : myData}
+    </span>
+  );
 }
 
-export default TableItemField;
+function wrapComponent({
+  field,
+  wrapData,
+  data,
+}) {
+  const {
+    Component,
+  } = field.props;
+
+  return React.cloneElement(
+    <Component />,
+    {
+      tableField: field,
+      tableData: wrapData,
+      originData: data,
+    },
+  );
+}
+
+function TableItemField({
+  data,
+  field,
+}: Props) {
+  const {
+    fieldKey,
+    flex,
+    minWidth,
+    Component = null,
+  } = field.props;
+
+  const wrapData = data[fieldKey] || null;
+
+  return (
+    <div
+      style={mixer([
+        styles.tableItemPlacement,
+        {
+          flex: flex || 1,
+          minWidth: minWidth || 'auto',
+        },
+      ])}>
+      {Component ? (
+        wrapComponent({
+          field,
+          wrapData,
+          data,
+        })
+      ) : (
+        itemFieldRenderer(field.props, wrapData)
+      )}
+    </div>
+  );
+}
+
+export default React.memo(TableItemField);
