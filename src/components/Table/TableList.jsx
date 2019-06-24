@@ -28,15 +28,7 @@ const styles = {
 };
 
 type Props = {
-  tableData: {
-    children: React.Node,
-    getActions: Function,
-    dataSource: Array<{
-      id: number,
-    }>,
-    fetchMore: Function,
-    fetchMoreHeight: number,
-  },
+  tableData: TableContext,
 };
 
 function TableList({
@@ -46,6 +38,7 @@ function TableList({
     getActions,
     fetchMore,
     fetchMoreHeight,
+    itemStyles,
   },
 }: Props) {
   const tableListRef = useRef(null);
@@ -125,7 +118,8 @@ function TableList({
           key={data.id}
           data={data}
           children={children}
-          getActions={getActions} />
+          getActions={getActions}
+          itemStyles={itemStyles} />
       )
       )}
       <div style={{ opacity: isReachEnd.current ? 1 : 0 }}>

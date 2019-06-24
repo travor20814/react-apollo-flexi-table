@@ -14,4 +14,11 @@ export type TableContext = {
     fontSize: number,
     wrapperStyle: Object,
   },
+  itemStyles: {
+    wrapperStyle: Object,
+  },
+  colors: {
+    PRIMARY_COLOR: string,
+    TEXT_COLOR: string,
+  },
 };

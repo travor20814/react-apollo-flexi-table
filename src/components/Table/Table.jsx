@@ -37,6 +37,7 @@ type Props = {
   headerBorderRadius?: number,
   headerFontSize?: number,
   headerWrapperStyle?: Object,
+  itemWrapperStyle?: Object,
   wrapperStyle?: Object,
 };
 
@@ -58,6 +59,7 @@ function Table({
   headerBorderRadius,
   headerFontSize,
   headerWrapperStyle,
+  itemWrapperStyle,
   wrapperStyle,
 }: Props) {
   const wrapChildren = children || [];
@@ -76,6 +78,9 @@ function Table({
       borderRadius: headerBorderRadius,
       fontSize: headerFontSize,
       wrapperStyle: headerWrapperStyle,
+    },
+    itemStyles: {
+      wrapperStyle: itemWrapperStyle,
     },
     colors: {
       PRIMARY_COLOR: '#ff0000',
@@ -118,6 +123,7 @@ Table.defaultProps = {
   placeholderWrapperStyle: null,
   placeholderStyle: null,
   placeholder: null,
+  itemWrapperStyle: null,
 };
 
 export default memo(Table);

@@ -89,12 +89,22 @@ function FlexiTable() {
     },
   };
 
+  const itemConfigs = {
+    itemWrapperStyle: {
+      minHeight: 'auto',
+      borderRadius: 4,
+      backgroundColor: '#fff',
+      padding: '8px 0',
+    },
+  };
+
   return (
     <div style={styles.wrapper}>
       <div style={styles.tableWrapper}>
         <Table
           {...headerConfigs}
           {...placeholderConfigs}
+          {...itemConfigs}
           dataSource={list}
           fetchMore={() => {
             if (list.length !== 9) {

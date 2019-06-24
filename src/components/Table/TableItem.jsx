@@ -1,5 +1,7 @@
 // @flow
 import React, { memo } from 'react';
+
+import { mixer } from '../../helpers/styles.js';
 // component
 import TableItemField from './TableItemField.jsx';
 
@@ -33,6 +35,7 @@ type Props = {
   data: Object,
   children: Array<Object>,
   getActions: Function,
+  itemStyles: Object,
 };
 
 type Field = {
@@ -54,9 +57,14 @@ function TableItem({
   data,
   children,
   getActions,
+  itemStyles,
 }: Props) {
   return (
-    <div style={styles.tableItemWrapper}>
+    <div
+      style={mixer([
+        styles.tableItemWrapper,
+        (itemStyles && itemStyles.wrapperStyle) || null,
+      ])}>
       {children.map((field: Field) => {
         if (!field.props) return null;
         const {
