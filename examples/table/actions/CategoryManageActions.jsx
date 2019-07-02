@@ -1,8 +1,21 @@
+// @flow
 import React from 'react';
 
-function CategoryManageActions() {
+type Props = {
+  id: number,
+  name: string,
+  nickname: string,
+  website: string,
+};
+
+function CategoryManageActions(props: Props) {
+  // getTableActions will bind dataSource for you
   return (
-    <button type="button" onClick={() => {}} />
+    <input
+      type="checkbox"
+      onClick={() => {
+        console.log(`Clicked on: ${props.id}/${props.name}`);
+      }} />
   );
 }
 

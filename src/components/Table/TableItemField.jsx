@@ -19,8 +19,8 @@ const styles = {
     whiteSpace: 'pre-line',
   },
   tableImage: {
-    width: 65,
-    height: 100,
+    width: '100%',
+    height: 80,
     backgroundSize: 'contain',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -38,10 +38,8 @@ type Props = {
       flex: number,
       isCenter: boolean,
       isImage: boolean,
-      isClickable: boolean,
       needBlackBg: boolean,
       Component?: React.Node,
-      MutationContext?: any,
       minWidth?: number,
       color?: string,
     },
@@ -54,7 +52,6 @@ function itemFieldRenderer(fieldProps, myData = null) {
   const {
     isImage,
     isCenter,
-    isClickable,
     prefix,
     needBlackBg,
     color,
@@ -72,8 +69,6 @@ function itemFieldRenderer(fieldProps, myData = null) {
         ])} />
     );
   }
-
-  if (isClickable) return null;
 
   return (
     <span

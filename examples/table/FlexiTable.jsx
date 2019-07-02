@@ -1,4 +1,4 @@
-/* eslint import/no-extraneous-dependencies: 0 */
+/* eslint import/no-extraneous-dependencies: 0, arrow-body-style: 0 */
 import React, {
   useState,
   memo,
@@ -9,8 +9,12 @@ import {
   Table,
   TableField,
 } from '../../src/index.js';
-
+import {
+  originList,
+  moreList,
+} from '../mock.js';
 // your components
+import ClickableBlock from './custom/ClickableBlock.jsx';
 import CategoryManageActions from './actions/CategoryManageActions.jsx';
 
 const styles = {
@@ -22,8 +26,8 @@ const styles = {
     justifyContent: 'center',
   },
   tableWrapper: {
-    width: 800,
-    height: 240,
+    width: 1024,
+    height: 480,
     padding: '24px 0',
     display: 'flex',
     alignItems: 'flex-start',
@@ -31,46 +35,8 @@ const styles = {
   },
 };
 
-const moreList = [{
-  id: 7,
-  name: 'Benson',
-  website: 'https://www.google.com',
-}, {
-  id: 8,
-  name: 'Emily',
-  website: 'https://www.google.com',
-}, {
-  id: 9,
-  name: 'Apple',
-  website: 'https://www.google.com',
-}];
-
 function FlexiTable() {
-  const [list, setList] = useState([{
-    id: 1,
-    name: 'John',
-    website: 'https://www.google.com',
-  }, {
-    id: 2,
-    name: 'Stanney',
-    website: 'https://www.google.com',
-  }, {
-    id: 3,
-    name: 'Travor',
-    website: 'https://www.google.com',
-  }, {
-    id: 4,
-    name: 'Elephant',
-    website: 'https://www.google.com',
-  }, {
-    id: 5,
-    name: 'Banana',
-    website: 'https://www.google.com',
-  }, {
-    id: 6,
-    name: 'Orange',
-    website: 'https://www.google.com',
-  }]);
+  const [list, setList] = useState(originList);
 
   const headerConfigs = {
     headerBackgroundColor: 'rgb(0, 185, 175)',
@@ -103,6 +69,10 @@ function FlexiTable() {
   return (
     <div style={styles.wrapper}>
       <div style={styles.tableWrapper}>
+        {/*
+          Bind Query outside Table, and pass it into dataSource.
+          For fetchMore demo reason, we are currently using mock list.
+        */}
         <Query
           query={gql`
           {
@@ -120,8 +90,10 @@ function FlexiTable() {
               {...placeholderConfigs}
               {...itemConfigs}
               dataSource={list}
+              fetchMoreHeight={30}
               fetchMore={() => {
-                if (list.length !== 9) {
+                /* trigger fetchMore base on the fetchMoreHeight */
+                if (list.length !== (originList.length + moreList.length)) {
                   setList([
                     ...list,
                     ...moreList,
@@ -132,18 +104,29 @@ function FlexiTable() {
 
                 return [];
               }}
-              fetchMoreHeight={30}
               showPlaceholder={!list.length}
               placeholder="No Data Available"
-              actionTitles={['操作']}
+              actionTitles={['Actions']}
               getActions={() => [
                 <CategoryManageActions />,
               ]}>
               <TableField
-                name="Name"
+                name="User Name"
                 fieldKey="name"
                 flex={1}
                 isCenter />
+              <TableField
+                name="Nickname"
+                fieldKey="nickname"
+                flex={1}
+                Component={(props) => {
+                  /* You can bind any components you want here */
+                  return (
+                    <ClickableBlock
+                      {...props}
+                      mutate={() => { console.log('Maybe a react-apollo mutation'); }} />
+                  );
+                }} />
               <TableField
                 name="Website"
                 fieldKey="website"
