@@ -89,10 +89,6 @@ function Table({
     itemStyles: {
       wrapperStyle: itemWrapperStyle,
     },
-    colors: {
-      PRIMARY_COLOR: '#ff0000',
-      TEXT_COLOR: '#9b9b9b',
-    },
   }), [
     wrapChildren,
     getActions,

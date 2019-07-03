@@ -109,7 +109,7 @@ function TableList({
 
   return (
     <div
-      className="hideScrollBar"
+      className="hide-scrollbar"
       id="tableScrollBar"
       style={styles.tableListWrapper}
       ref={tableListRef}>
