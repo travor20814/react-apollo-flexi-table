@@ -17,6 +17,7 @@ const styles = {
     fontWeight: 500,
     lineHeight: 1.618,
     whiteSpace: 'pre-line',
+    wordBreak: 'break-all',
   },
   tableImage: {
     width: '100%',
@@ -42,6 +43,7 @@ type Props = {
       Component?: React.Node,
       minWidth?: number,
       color?: string,
+      style?: Object,
     },
   },
 };
@@ -55,6 +57,7 @@ function itemFieldRenderer(fieldProps, myData = null) {
     prefix,
     needBlackBg,
     color,
+    style,
   } = fieldProps;
 
   if (isImage) {
@@ -66,6 +69,7 @@ function itemFieldRenderer(fieldProps, myData = null) {
             backgroundColor: needBlackBg ? 'rgba(0, 0, 0, 0.6)' : 'transparent',
             backgroundImage: myData ? `url(${myData})` : null,
           },
+          style || null,
         ])} />
     );
   }
@@ -80,6 +84,7 @@ function itemFieldRenderer(fieldProps, myData = null) {
         } : {
           color: '#9b9b9b',
         },
+        style || null,
       ])}>
       {Array.isArray(myData)
         ? myData.map(d => (prefix ? `${prefix}${d} ` : `${d} `))
