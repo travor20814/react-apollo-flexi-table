@@ -8,7 +8,7 @@ A flexible table with frozen header for React and well combined with react-apoll
 
 ```javascript
 import React from 'react';
-import Table, { TableField } from 'react-apollo-flexi-table'; 
+import Table, { TableField } from 'react-apollo-flexi-table';
 
 function Example() {
    return (
@@ -67,6 +67,7 @@ https://github.com/travor20814/react-apollo-flexi-table/blob/master/examples/tab
 | color | `string` | `#9b9b9b` | |
 | isCenter | `boolean` | `false` | |
 | isImage | `boolean` | `false` | |
+| style | `Object` | `undefined` | |
 | Component | `React.Node` | `null` | |
 
 ## Descriptions
@@ -92,5 +93,7 @@ https://github.com/travor20814/react-apollo-flexi-table/blob/master/examples/tab
 * `fieldKey` - Define what `dataSource` key you want to take.
 
 * `flex` - Define field flex in the table. It will helps you synchronize header flex and item field flex.
+
+* `style` - If you want customizing your field style, you can pass any css style you want to override it.
 
 * `Component` - You can pass your custom component here, and it will replace the origin one. Also, some table useful props will pass into your custom component.
