@@ -2,7 +2,7 @@
 
 A flexible table with frozen header for React and well combined with react-apollo. By using this table, You can easily sharing flex ratio on both table header and table items, and all components are written in hooks.
 
-![Demo GIF](https://github.com/travor20814/react-apollo-flexi-table/blob/master/table-scroll.gif)
+![Demo GIF](https://github.com/travor20814/react-apollo-flexi-table/blob/master/examples/table-scroll.gif)
 
 ## Usage
 
