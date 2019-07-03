@@ -8,6 +8,7 @@ A flexible table with frozen header for React and well combined with react-apoll
 
 ```javascript
 import React from 'react';
+import { Mutation } from 'react-apollo';
 import {
   Table,
   TableField,
@@ -19,15 +20,32 @@ function Example() {
        dataSource={[{
          id: 1,
          name: 'John',
+         nickname: 'J',
        }, {
          id: 2,
          name: 'Ben',
-       }]}>
+         nickname: 'B',
+       }]}
+       fetchMoreHeight={150}
+       fetchMore={() => { /* do your fetchMore here */ }}>
        <TableField
          name="User Name"
          fieldKey="name"
          flex={1}
          isCenter />
+      <TableField
+         name="Nickname"
+         fieldKey="nickname"
+         flex={1.2}
+         Component={props => (
+           <Mutation mutation={YOUR_MUTATION}>
+             {mutate => (
+               <YourComponent
+                 {...props}
+                 mutate={mutate} />
+             )}
+           </Mutation>
+         )}
      </Table>
    );
 }
