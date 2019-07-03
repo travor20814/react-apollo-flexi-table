@@ -58,12 +58,12 @@ https://github.com/travor20814/react-apollo-flexi-table/blob/master/examples/tab
 | name | type | defaultValue | required |
 | -- | -- | -- | -- |
 | children | `Array<React.Node>` | `null` | v |
-| dataSource | `Array<Object>` | `undefined` | v |
-| actionTitles | `Array<string>` | `undefined` | |
-| getActions | `Function` | `undefined` | |
+| dataSource | `Array<Object>` | `[]` | v |
+| actionTitles | `Array<string>` | `[]` | |
+| getActions | `Function` | `() => []` | |
 | fetchMore | `Function` | `undefined` | |
 | fetchMoreHeight | `number` | `150` | |
-| showPlaceholder | `boolean` | `undefined` | |
+| showPlaceholder | `boolean` | `false` | |
 | placeholder | `string` | `null` | |
 | placeholderColor | `string` | `#9b9b9b` | |
 | placeholderWrapperStyle | `Object` | `null` | |
@@ -84,7 +84,7 @@ https://github.com/travor20814/react-apollo-flexi-table/blob/master/examples/tab
 | name | `string` | `undefined` | v |
 | fieldKey | `string` | `undefined` | v |
 | flex | `number` | `1` | |
-| minWidth | `number` | `undefined` | |
+| minWidth | `number` | `auto` | |
 | color | `string` | `#9b9b9b` | |
 | isCenter | `boolean` | `false` | |
 | isImage | `boolean` | `false` | |
