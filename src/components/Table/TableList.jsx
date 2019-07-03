@@ -6,7 +6,7 @@ import React, {
   useRef,
 } from 'react';
 
-import TableItem from './TableItem.jsx';
+import TableItem from './TableItem';
 
 const styles = {
   tableListWrapper: {

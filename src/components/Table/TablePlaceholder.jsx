@@ -1,7 +1,7 @@
 // @flow
 import React, { memo } from 'react';
 
-import { mixer } from '../../helpers/styles.js';
+import { mixer } from '../../helpers/styles';
 
 const styles = {
   tablePlaceholder: {

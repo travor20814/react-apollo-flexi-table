@@ -1,8 +1,8 @@
 // @flow
 import React, { memo } from 'react';
 
-import { TableContext } from '../../constants/context.js';
-import { mixer } from '../../helpers/styles.js';
+import { TableContext } from '../../constants/context';
+import { mixer } from '../../helpers/styles';
 
 const styles = {
   tableFrozenHeaderWrapper: {

@@ -1,11 +1,11 @@
 // @flow
 import React, { memo } from 'react';
 
-import { TableContext } from '../../constants/context.js';
-import { mixer } from '../../helpers/styles.js';
-import TableHeader from './TableHeader.jsx';
-import TableList from './TableList.jsx';
-import TablePlaceholder from './TablePlaceholder.jsx';
+import { TableContext } from '../../constants/context';
+import { mixer } from '../../helpers/styles';
+import TableHeader from './TableHeader';
+import TableList from './TableList';
+import TablePlaceholder from './TablePlaceholder';
 
 const styles = {
   tableWrapper: {

@@ -1,9 +1,9 @@
 // @flow
 import React, { memo } from 'react';
 
-import { mixer } from '../../helpers/styles.js';
+import { mixer } from '../../helpers/styles';
 // component
-import TableItemField from './TableItemField.jsx';
+import TableItemField from './TableItemField';
 
 const styles = {
   tableItemWrapper: {
