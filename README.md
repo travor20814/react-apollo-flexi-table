@@ -97,7 +97,7 @@ https://github.com/travor20814/react-apollo-flexi-table/blob/master/examples/tab
 
 * `children` - You should use our TableField for clearly defining what Table child is.
 
-* `dataSource` - The data list you want to map to the table. You must be careful about the `key` you use. TableField's prop `fieldKey` will find value base on the object key.
+* `dataSource` - The data list you want to map to the table. You must be careful about the `key` you use. TableField's prop `fieldKey` will find value base on the object key. (Hint: Each object should have an `id` for unique key)
 
 * `actionTitles` - actions will place on the right-hand side of the table. Here you can assign these action fields title.
 
