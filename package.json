@@ -1,7 +1,7 @@
 {
   "name": "react-apollo-flexi-table",
-  "version": "0.1.6",
-  "description": "react apollo flexible frozen table",
+  "version": "0.1.7",
+  "description": "react flexible frozen header table and well combined with react-apollo",
   "main": "lib/index.js",
   "scripts": {
     "prepublishOnly": "NODE_ENV=production babel src -d lib",
