@@ -1,6 +1,6 @@
 {
   "name": "react-apollo-flexi-table",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "react apollo flexible frozen table",
   "main": "lib/index.js",
   "scripts": {
