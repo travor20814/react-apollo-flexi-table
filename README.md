@@ -6,7 +6,30 @@ A flexible table with frozen header for React and well combined with react-apoll
 
 ## Usage
 
-Please check my examples folder and you will see.
+```javascript
+import React from 'react';
+import Table, { TableField } from 'react-apollo-flexi-table'; 
+
+function Example() {
+   return (
+     <Table
+       dataSource={[{
+         id: 1,
+         name: 'John',
+       }, {
+         id: 2,
+         name: 'Ben',
+       }]}>
+       <TableField
+         name="User Name"
+         fieldKey="name"
+         flex={1}
+         isCenter />
+     </Table>
+   );
+}
+```
+Please check my examples folder and you will see more details.
 https://github.com/travor20814/react-apollo-flexi-table/blob/master/examples/table/FlexiTable.jsx
 
 ## Options
