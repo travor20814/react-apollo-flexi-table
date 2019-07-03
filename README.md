@@ -8,7 +8,10 @@ A flexible table with frozen header for React and well combined with react-apoll
 
 ```javascript
 import React from 'react';
-import Table, { TableField } from 'react-apollo-flexi-table';
+import {
+  Table,
+  TableField,
+} from 'react-apollo-flexi-table';
 
 function Example() {
    return (
