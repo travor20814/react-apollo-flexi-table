@@ -1,5 +1,8 @@
 // @flow
-import React, { memo } from 'react';
+import React, {
+  memo,
+  useMemo,
+} from 'react';
 
 import { TableContext } from '../../constants/context';
 import { mixer } from '../../helpers/styles';
@@ -62,9 +65,13 @@ function Table({
   itemWrapperStyle,
   wrapperStyle,
 }: Props) {
-  const wrapChildren = children || [];
-  const wrapStyle = Array.isArray(wrapperStyle) ? wrapperStyle : [wrapperStyle];
-  const tableData = {
+  const wrapChildren = useMemo(() => (
+    children || []
+  ), [children]);
+  const wrapStyle = useMemo(() => (
+    Array.isArray(wrapperStyle) ? wrapperStyle : [wrapperStyle]
+  ), [wrapperStyle]);
+  const tableData = useMemo(() => ({
     children: Array.isArray(wrapChildren) ? wrapChildren : [wrapChildren],
     getActions: getActions || (() => []),
     dataSource: dataSource || [],
@@ -86,7 +93,21 @@ function Table({
       PRIMARY_COLOR: '#ff0000',
       TEXT_COLOR: '#9b9b9b',
     },
-  };
+  }), [
+    wrapChildren,
+    getActions,
+    dataSource,
+    fetchMore,
+    fetchMoreHeight,
+    actionTitles,
+    headerBackgroundColor,
+    headerTextColor,
+    headerBorder,
+    headerBorderRadius,
+    headerFontSize,
+    headerWrapperStyle,
+    itemWrapperStyle,
+  ]);
 
   return (
     <TableContext.Provider value={tableData}>

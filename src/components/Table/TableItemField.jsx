@@ -123,7 +123,9 @@ function TableItemField({
     Component = null,
   } = field.props;
 
-  const wrapData = data[fieldKey] || null;
+  const wrapData = React.useMemo(() => (
+    data[fieldKey] || null
+  ), [data, fieldKey]);
 
   return (
     <div
