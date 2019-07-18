@@ -44,11 +44,20 @@ function TableList({
   const tableListRef = useRef(null);
   const isFetching = useRef();
   const isReachEnd = useRef();
+  const isChangeFromFetchMore = useRef();
   const [paddingHeight, setPaddingHeight]: [number, Function] = useState(null);
 
   useEffect(() => {
+    isChangeFromFetchMore.current = false;
+  }, []);
+
+  useEffect(() => {
     isFetching.current = false;
-    document.getElementById('tableScrollBar').scrollTop = 0;
+    if (isChangeFromFetchMore.current) {
+      isChangeFromFetchMore.current = false;
+    } else {
+      document.getElementById('tableScrollBar').scrollTop = 0;
+    }
   }, [dataSource]);
 
   useEffect(() => {
@@ -60,18 +69,38 @@ function TableList({
       if (isFetching.current || !dataSource.length || !fetchMore) return;
 
       isFetching.current = true;
+      isChangeFromFetchMore.current = true;
 
       const fmResponse = await fetchMore();
 
       if (fmResponse) {
-        if (fmResponse.data) {
+        const {
+          data,
+        } = fmResponse;
+
+        if (data) {
           /* fetchMore is fetch from apollo */
-          isReachEnd.current = !fmResponse.data[Object.keys(fmResponse.data)[0]].length;
+          const newDataSource = data[Object.keys(data)[0]];
+
+          if (Array.isArray(newDataSource)) {
+            isReachEnd.current = newDataSource.length === dataSource.length;
+          } else {
+            const dataSourceKeys = Object.keys(newDataSource);
+            const candidateSourceKey = dataSourceKeys.find(
+              key => Array.isArray(newDataSource[key])
+            );
+
+            if (candidateSourceKey) {
+              isReachEnd.current = newDataSource[candidateSourceKey].length === dataSource.length;
+            }
+          }
         } else {
           /* reach end when return empty array */
           isReachEnd.current = !fmResponse.length;
         }
       }
+
+      if (isReachEnd.current) isFetching.current = false;
     }
 
     function onScroll() {
@@ -120,8 +149,7 @@ function TableList({
           children={children}
           getActions={getActions}
           itemStyles={itemStyles} />
-      )
-      )}
+      ))}
       <div style={{ opacity: isReachEnd.current ? 1 : 0 }}>
         <div
           style={{
