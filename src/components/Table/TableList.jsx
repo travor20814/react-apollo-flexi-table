@@ -49,6 +49,8 @@ function TableList({
 
   useEffect(() => {
     isChangeFromFetchMore.current = false;
+    isFetching.current = false;
+    isReachEnd.current = false;
   }, []);
 
   useEffect(() => {
@@ -56,17 +58,20 @@ function TableList({
     if (isChangeFromFetchMore.current) {
       isChangeFromFetchMore.current = false;
     } else {
+      isReachEnd.current = false;
       document.getElementById('tableScrollBar').scrollTop = 0;
     }
   }, [dataSource]);
 
   useEffect(() => {
     const ref = tableListRef.current;
-    isFetching.current = false;
-    isReachEnd.current = false;
 
     async function fetchMoreScope() {
-      if (isFetching.current || !dataSource.length || !fetchMore) return;
+      if (isFetching.current
+        || isReachEnd.current
+        || !dataSource.length
+        || !fetchMore
+      ) return;
 
       isFetching.current = true;
       isChangeFromFetchMore.current = true;
