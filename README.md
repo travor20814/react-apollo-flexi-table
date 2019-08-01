@@ -118,3 +118,9 @@ https://github.com/travor20814/react-apollo-flexi-table/blob/master/examples/tab
 * `style` - If you want customizing your field style, you can pass any css style you want to override it.
 
 * `Component` - You can pass your custom component here, and it will replace the origin one. Also, some table useful props will pass into your custom component.
+
+## TODO
+
+* Fetch more mapper function (allow customizing result key)
+* Text ellipsize and hover on ellipsized text will show complete text block
+* Scroll bar optimization (for Windows OS user)
