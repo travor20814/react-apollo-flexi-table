@@ -1,11 +1,11 @@
 // @flow
 /* eslint import/no-extraneous-dependencies: 0 */
 import React from 'react';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/client';
 import ApolloClient from 'apollo-boost';
 import { hot } from 'react-hot-loader';
 
-import FlexiTable from './table/FlexiTable.jsx';
+import FlexiTable from './table/FlexiTable';
 
 const client = new ApolloClient({
   uri: 'https://48p1r2roz4.sse.codesandbox.io',

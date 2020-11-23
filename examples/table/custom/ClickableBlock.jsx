@@ -1,8 +1,6 @@
 // @flow
 /* eslint jsx-a11y/no-autofocus: 0 */
-import React, {
-  memo,
-} from 'react';
+import React from 'react';
 
 const styles = {
   wrapper: {
@@ -42,6 +40,7 @@ function ClickableBlock({
   return (
     <div
       onDoubleClick={() => {
+        // eslint-disable-next-line no-alert
         alert(`
           You are clicking a custom component with:
           TableData: ${tableData}
@@ -58,4 +57,4 @@ function ClickableBlock({
   );
 }
 
-export default memo(ClickableBlock);
+export default ClickableBlock;

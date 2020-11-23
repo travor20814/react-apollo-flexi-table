@@ -2,6 +2,8 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -10,30 +12,48 @@ module.exports = {
     path.resolve(__dirname, 'entry.jsx'),
   ],
   output: {
-    filename: 'bundle.js',
-    path: __dirname,
+    filename: '[name].[contenthash].js',
+    path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
   },
-  resolve: {
-    extensions: ['.js', '.jsx'],
-  },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    new CleanWebpackPlugin(),
+    new HTMLWebpackPlugin({
+      template: path.resolve(__dirname, 'index.html'),
+    }),
+    new webpack.NoEmitOnErrorsPlugin(),
   ],
   devServer: {
-    contentBase: __dirname,
-    port: 5334,
-    progress: true,
     hot: true,
+    contentBase: __dirname,
+    publicPath: '/',
+    compress: true,
+    port: 5334,
+    filename: 'bundle.js',
     historyApiFallback: true,
+    host: '0.0.0.0',
+    disableHostCheck: true,
   },
   target: 'web',
+  resolve: {
+    mainFields: [
+      'browser',
+      'main',
+      'module',
+    ],
+    extensions: [
+      '.jsx',
+      '.js',
+    ],
+    alias: {
+      'react-dom': '@hot-loader/react-dom',
+    },
+  },
   module: {
     rules: [{
       test: /\.jsx?$/,
       use: [
         'babel-loader',
-        'react-hot-loader/webpack',
       ],
     }],
   },

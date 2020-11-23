@@ -1,21 +1,20 @@
-/* eslint import/no-extraneous-dependencies: 0, arrow-body-style: 0 */
+// @flow
+/* eslint import/no-extraneous-dependencies: 0, react/jsx-props-no-spreading: 0, no-console: 0 */
 import React, {
   useState,
-  memo,
 } from 'react';
-import { Query } from 'react-apollo';
-import { gql } from 'apollo-boost';
+
 import {
   Table,
   TableField,
-} from '../../src/index.js';
+} from '../../src/index';
 import {
   originList,
   moreList,
-} from '../mock.js';
+} from '../mock';
 // your components
-import ClickableBlock from './custom/ClickableBlock.jsx';
-import CategoryManageActions from './actions/CategoryManageActions.jsx';
+import ClickableBlock from './custom/ClickableBlock';
+import CategoryManageActions from './actions/CategoryManageActions';
 
 const styles = {
   wrapper: {
@@ -73,71 +72,54 @@ function FlexiTable() {
           Bind Query outside Table, and pass it into dataSource.
           For fetchMore demo reason, we are currently using mock list.
         */}
-        <Query
-          query={gql`
-          {
-            rates(currency: "USD") {
-              currency
-              rate
+        <Table
+          {...headerConfigs}
+          {...placeholderConfigs}
+          {...itemConfigs}
+          dataSource={list}
+          fetchMoreHeight={30}
+          fetchMore={() => {
+            /* trigger fetchMore base on the fetchMoreHeight */
+            if (list.length !== (originList.length + moreList.length)) {
+              setList([
+                ...list,
+                ...moreList,
+              ]);
+
+              return moreList;
             }
-          }
-        `}>
-          {({
-            data,
-          }) => (
-            <Table
-              {...headerConfigs}
-              {...placeholderConfigs}
-              {...itemConfigs}
-              dataSource={list}
-              fetchMoreHeight={30}
-              fetchMore={() => {
-                /* trigger fetchMore base on the fetchMoreHeight */
-                if (list.length !== (originList.length + moreList.length)) {
-                  setList([
-                    ...list,
-                    ...moreList,
-                  ]);
 
-                  return moreList;
-                }
-
-                return [];
-              }}
-              showPlaceholder={!list.length}
-              placeholder="No Data Available"
-              actionTitles={['Actions']}
-              getActions={() => [
-                <CategoryManageActions />,
-              ]}>
-              <TableField
-                name="User Name"
-                fieldKey="name"
-                flex={1}
-                isCenter />
-              <TableField
-                name="Nickname"
-                fieldKey="nickname"
-                flex={1}
-                Component={(props) => {
-                  /* You can bind any components you want here */
-                  return (
-                    <ClickableBlock
-                      {...props}
-                      mutate={() => { console.log('Maybe a react-apollo mutation'); }} />
-                  );
-                }} />
-              <TableField
-                name="Website"
-                fieldKey="website"
-                flex={2}
-                isCenter />
-            </Table>
-          )}
-        </Query>
+            return [];
+          }}
+          showPlaceholder={!list.length}
+          placeholder="No Data Available"
+          actionTitles={['Actions']}
+          getActions={() => [
+            <CategoryManageActions />,
+          ]}>
+          <TableField
+            name="User Name"
+            fieldKey="name"
+            flex={1}
+            isCenter />
+          <TableField
+            name="Nickname"
+            fieldKey="nickname"
+            flex={1}
+            Component={props => (
+              <ClickableBlock
+                {...props}
+                mutate={() => { console.log('Maybe a react-apollo mutation'); }} />
+            )} />
+          <TableField
+            name="Website"
+            fieldKey="website"
+            flex={2}
+            isCenter />
+        </Table>
       </div>
     </div>
   );
 }
 
-export default memo(FlexiTable);
+export default FlexiTable;

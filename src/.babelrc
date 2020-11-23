@@ -1,15 +1,13 @@
 {
   "presets": [
     ["@babel/preset-env", {
-      "targets": {
-        "browsers": ["last 2 versions"],
-      },
+      "targets": "cover 99.5%, not dead"
     }],
     "@babel/react",
-    "@babel/flow",
+    "@babel/flow"
   ],
   "plugins": [
     "@babel/transform-runtime",
-    "@babel/plugin-proposal-class-properties",
-  ],
+    "@babel/plugin-proposal-class-properties"
+  ]
 }
